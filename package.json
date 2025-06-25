@@ -1,0 +1,33 @@
+{
+  "name": "js-4-hw-18",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx parcel src/index.html",
+    "build": "parcel build src/index.html --public-url",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build",
+    "server": "json-server --watch student.json --port 3000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mark-ua-top/js-4-hw-18.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mark-ua-top/js-4-hw-18/issues"
+  },
+  "homepage": "https://github.com/mark-ua-top/js-4-hw-18#readme",
+  "dependencies": {
+    "gh-pages": "^6.3.0",
+    "json-server": "^1.0.0-beta.3",
+    "parcel-reporter-clean-dist": "^1.0.4",
+    "posthtml-include": "^2.0.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.15.2"
+  }
+}
