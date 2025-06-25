@@ -1,0 +1,16 @@
+{
+  "students": [
+    {
+      "id": "deb6",
+      "name": "mark",
+      "age": 12,
+      "course": "3",
+      "skills": [
+        "fly",
+        "destroy"
+      ],
+      "email": "mark.d.nahorniak@gmail.com",
+      "isEnrolled": true
+    }
+  ]
+}
