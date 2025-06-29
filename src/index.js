@@ -13,7 +13,7 @@ document
 
 document
   .getElementById("students-table")
-  .addEventListener("click", function (e) {
+  .addEventListener("click", (e) => {
     if (e.target.tagName === "BUTTON") {
       const id = e.target.dataset.id;
       if (e.target.classList.contains("update-btn")) {
