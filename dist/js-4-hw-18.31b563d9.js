@@ -686,7 +686,7 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getStudents", ()=>getStudents);
 function getStudents() {
-    fetch("http://localhost:3000/students").then((response)=>response.json()).then((data)=>renderStudents(data)).catch((error)=>console.error("\u041F\u043E\u043C\u0438\u043B\u043A\u0430 \u043E\u0442\u0440\u0438\u043C\u0430\u043D\u043D\u044F \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0456\u0432:", error));
+    fetch("http://localhost:3000/students").then((response)=>response.json()).then((data)=>renderStudents(data));
 }
 function renderStudents(students) {
     const studentsTableBody = document.querySelector("#students-table tbody");
@@ -760,7 +760,6 @@ function addStudent(e) {
         email: emailInput.value.trim(),
         isEnrolled: isEnrolledInput.checked
     };
-    // Валідація простенька (наприклад, ім'я не пусте)
     if (!student.name) {
         showMessage("\u0406\u043C'\u044F \u043D\u0435 \u043C\u043E\u0436\u0435 \u0431\u0443\u0442\u0438 \u043F\u043E\u0440\u043E\u0436\u043D\u0456\u043C", true);
         return;
@@ -778,33 +777,7 @@ function addStudent(e) {
         document.getElementById("add-student-form").reset();
         showMessage("\u0421\u0442\u0443\u0434\u0435\u043D\u0442\u0430 \u0434\u043E\u0434\u0430\u043D\u043E \u0443\u0441\u043F\u0456\u0448\u043D\u043E!");
         require("3c21caf5331d6e54").then((module)=>module.getStudents());
-    }).catch((error)=>{
-        console.error("\u041F\u043E\u043C\u0438\u043B\u043A\u0430 \u043F\u0440\u0438 \u0434\u043E\u0434\u0430\u0432\u0430\u043D\u043D\u0456 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430:", error);
-        showMessage("\u041D\u0435 \u0432\u0434\u0430\u043B\u043E\u0441\u044F \u0434\u043E\u0434\u0430\u0442\u0438 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430", true);
     });
-}
-function showMessage(text, isError = false) {
-    let msgElem = document.getElementById("message-box");
-    if (!msgElem) {
-        msgElem = document.createElement("div");
-        msgElem.id = "message-box";
-        msgElem.style.position = "fixed";
-        msgElem.style.top = "10px";
-        msgElem.style.right = "10px";
-        msgElem.style.padding = "10px 20px";
-        msgElem.style.borderRadius = "5px";
-        msgElem.style.fontWeight = "bold";
-        msgElem.style.zIndex = "1000";
-        msgElem.style.transition = "opacity 0.5s";
-        document.body.appendChild(msgElem);
-    }
-    msgElem.textContent = text;
-    msgElem.style.backgroundColor = isError ? "#f44336" : "#4caf50";
-    msgElem.style.color = "white";
-    msgElem.style.opacity = "1";
-    setTimeout(()=>{
-        if (msgElem) msgElem.style.opacity = "0";
-    }, 3000);
 }
 
 },{"3c21caf5331d6e54":"aE3XE","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"aE3XE":[function(require,module,exports,__globalThis) {
@@ -825,12 +798,9 @@ function updateStudent(id) {
         body: JSON.stringify({
             name: newName
         })
-    }).then((res)=>{
-        if (!res.ok) throw new Error("\u041D\u0435 \u0432\u0434\u0430\u043B\u043E\u0441\u044F \u043E\u043D\u043E\u0432\u0438\u0442\u0438 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430");
-        return res.json();
-    }).then(()=>{
+    }).then((res)=>res.json()).then(()=>{
         require("67df27cb0368702a").then((module)=>module.getStudents());
-    }).catch((err)=>console.error("\u041F\u043E\u043C\u0438\u043B\u043A\u0430 \u043E\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044F \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430:", err));
+    });
 }
 
 },{"67df27cb0368702a":"aE3XE","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}],"3Dbl1":[function(require,module,exports,__globalThis) {
@@ -841,14 +811,8 @@ function deleteStudent(id) {
     if (!confirm("\u0412\u0438 \u0432\u043F\u0435\u0432\u043D\u0435\u043D\u0456, \u0449\u043E \u0445\u043E\u0447\u0435\u0442\u0435 \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0446\u044C\u043E\u0433\u043E \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430?")) return;
     fetch(`http://localhost:3000/students/${id}`, {
         method: "DELETE"
-    }).then((res)=>{
-        if (!res.ok) throw new Error("\u041D\u0435 \u0432\u0434\u0430\u043B\u043E\u0441\u044F \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430");
-        return res.json();
     }).then(()=>{
         require("2b622b726217e136").then((module)=>module.getStudents());
-    }).catch((err)=>{
-        console.error("\u041F\u043E\u043C\u0438\u043B\u043A\u0430 \u0432\u0438\u0434\u0430\u043B\u0435\u043D\u043D\u044F \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430:", err);
-        showMessage("\u041F\u043E\u043C\u0438\u043B\u043A\u0430 \u043F\u0440\u0438 \u0432\u0438\u0434\u0430\u043B\u0435\u043D\u043D\u0456 \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430", true);
     });
 }
 

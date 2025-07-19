@@ -7,12 +7,8 @@ export function updateStudent(id) {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: newName }),
   })
-    .then((res) => {
-      if (!res.ok) throw new Error("Не вдалося оновити студента");
-      return res.json();
-    })
+    .then((res) => res.json())
     .then(() => {
       import("./getStudents.js").then((module) => module.getStudents());
-    })
-    .catch((err) => console.error("Помилка оновлення студента:", err));
+    });
 }

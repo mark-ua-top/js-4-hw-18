@@ -1,8 +1,7 @@
 export function getStudents() {
   fetch("http://localhost:3000/students")
     .then((response) => response.json())
-    .then((data) => renderStudents(data))
-    .catch((error) => console.error("Помилка отримання студентів:", error));
+    .then((data) => renderStudents(data));
 }
 
 function renderStudents(students) {
