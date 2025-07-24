@@ -1,9 +1,10 @@
-export function deleteStudent(id) {
+export async function deleteStudent(id) {
   if (!confirm("Ви впевнені, що хочете видалити цього студента?")) return;
 
-  fetch(`http://localhost:3000/students/${id}`, {
+  await fetch(`http://localhost:3000/students/${id}`, {
     method: "DELETE",
-  }).then(() => {
-    import("./getStudents.js").then((module) => module.getStudents());
   });
+
+  const module = import("./getStudents.js");
+  module.getStudents();
 }

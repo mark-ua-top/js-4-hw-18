@@ -1,8 +1,8 @@
-export function updateStudent(id) {
+export async function updateStudent(id) {
   const newName = prompt("Введіть нове ім'я студента:");
   if (!newName) return;
 
-  fetch(`http://localhost:3000/students/${id}`, {
+  await fetch(`http://localhost:3000/students/${id}`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name: newName }),

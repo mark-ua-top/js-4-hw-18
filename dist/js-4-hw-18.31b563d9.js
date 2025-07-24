@@ -673,7 +673,7 @@ var _patchStudentJs = require("./api/patchStudent.js");
 var _deleteStudentJs = require("./api/deleteStudent.js");
 document.getElementById("get-students-btn").addEventListener("click", (0, _getStudentsJs.getStudents));
 document.getElementById("add-student-form").addEventListener("submit", (0, _postStudentJs.addStudent));
-document.getElementById("students-table").addEventListener("click", function(e) {
+document.getElementById("students-table").addEventListener("click", (e)=>{
     if (e.target.tagName === "BUTTON") {
         const id = e.target.dataset.id;
         if (e.target.classList.contains("update-btn")) (0, _patchStudentJs.updateStudent)(id);
@@ -685,8 +685,10 @@ document.getElementById("students-table").addEventListener("click", function(e) 
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "getStudents", ()=>getStudents);
-function getStudents() {
-    fetch("http://localhost:3000/students").then((response)=>response.json()).then((data)=>renderStudents(data));
+async function getStudents() {
+    const response = await fetch("http://localhost:3000/students");
+    const data = response.json();
+    renderStudents(data);
 }
 function renderStudents(students) {
     const studentsTableBody = document.querySelector("#students-table tbody");
@@ -744,7 +746,7 @@ exports.export = function(dest, destName, get) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "addStudent", ()=>addStudent);
-function addStudent(e) {
+async function addStudent(e) {
     e.preventDefault();
     const nameInput = document.getElementById("name");
     const ageInput = document.getElementById("age");
@@ -764,7 +766,7 @@ function addStudent(e) {
         showMessage("\u0406\u043C'\u044F \u043D\u0435 \u043C\u043E\u0436\u0435 \u0431\u0443\u0442\u0438 \u043F\u043E\u0440\u043E\u0436\u043D\u0456\u043C", true);
         return;
     }
-    fetch("http://localhost:3000/students", {
+    await fetch("http://localhost:3000/students", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -787,10 +789,10 @@ module.exports = Promise.resolve(module.bundle.root("461i0"));
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "updateStudent", ()=>updateStudent);
-function updateStudent(id) {
+async function updateStudent(id) {
     const newName = prompt("\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043D\u043E\u0432\u0435 \u0456\u043C'\u044F \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430:");
     if (!newName) return;
-    fetch(`http://localhost:3000/students/${id}`, {
+    await fetch(`http://localhost:3000/students/${id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json"
@@ -807,13 +809,13 @@ function updateStudent(id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "deleteStudent", ()=>deleteStudent);
-function deleteStudent(id) {
+async function deleteStudent(id) {
     if (!confirm("\u0412\u0438 \u0432\u043F\u0435\u0432\u043D\u0435\u043D\u0456, \u0449\u043E \u0445\u043E\u0447\u0435\u0442\u0435 \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u0446\u044C\u043E\u0433\u043E \u0441\u0442\u0443\u0434\u0435\u043D\u0442\u0430?")) return;
-    fetch(`http://localhost:3000/students/${id}`, {
+    await fetch(`http://localhost:3000/students/${id}`, {
         method: "DELETE"
-    }).then(()=>{
-        require("2b622b726217e136").then((module)=>module.getStudents());
     });
+    const module = require("2b622b726217e136");
+    module.getStudents();
 }
 
 },{"2b622b726217e136":"aE3XE","@parcel/transformer-js/src/esmodule-helpers.js":"jnFvT"}]},["5j6Kf","a0t4e"], "a0t4e", "parcelRequire8620", {})

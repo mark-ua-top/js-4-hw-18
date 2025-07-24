@@ -1,4 +1,4 @@
-export function addStudent(e) {
+export async function addStudent(e) {
   e.preventDefault();
 
   const nameInput = document.getElementById("name");
@@ -22,7 +22,7 @@ export function addStudent(e) {
     return;
   }
 
-  fetch("http://localhost:3000/students", {
+  await  fetch("http://localhost:3000/students", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(student),

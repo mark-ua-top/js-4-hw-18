@@ -1,7 +1,7 @@
-export function getStudents() {
-  fetch("http://localhost:3000/students")
-    .then((response) => response.json())
-    .then((data) => renderStudents(data));
+export async function getStudents() {
+  const response = await fetch("http://localhost:3000/students");
+  const data = response.json();
+  renderStudents(data);
 }
 
 function renderStudents(students) {
